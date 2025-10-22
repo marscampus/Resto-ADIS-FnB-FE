@@ -468,7 +468,7 @@ function DataMenu({ addItem, setAddItem, calculateUpdatedGrandTotalDisc, dataShi
     const itemTemplate = (item) => {
         const getItemImage = () => {
             if (item.FOTO) {
-                return `data:image / jpeg; base64, ${item.FOTO}`;
+                return `${item.FOTO}`;
             }
             return '/dummy-pict.png';
         };
