@@ -167,11 +167,11 @@ const AppTopbar = forwardRef((props, ref) => {
                             Log out
                         </span>
                     </OverlayPanel>
-                    <Menu ref={menu} model={overlayMenuItems} popup />
+                    {/* <Menu ref={menu} model={overlayMenuItems} popup />
                     <button type="button" className="p-link layout-topbar-button" onClick={(e) => showMenu(e)}>
                         <i className="pi pi-database" />
                         <span>Konversi</span>
-                    </button>
+                    </button> */}
 
                     {/* <Link href="/profile">
 					<button type="button" className="p-link layout-topbar-button">
