@@ -107,7 +107,7 @@ const Layout = (props) => {
     return (
         <React.Fragment>
             <Head>
-                <title>Foodcourt</title>
+                <title>ADIS FNB</title>
                 <meta charSet="UTF-8" />
                 <meta
                     name="description"

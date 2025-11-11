@@ -11,9 +11,9 @@ export default async function handler(req, res) {
     const { id_user, id_plugin } = req.body;
     // return res.status(200).json({ message: req.body });
 
-    if (!id_user || !id_plugin) {
-        return res.status(400).json({ message: 'id_users or id_plugin not found' });
-    }
+    // if (!id_user || !id_plugin) {
+    //     return res.status(400).json({ message: 'id_users or id_plugin not found' });
+    // }
 
     try {
         const payload = { orderdata: `${id_user}/${id_plugin}` };
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         const jwt = await new SignJWT(payload).setProtectedHeader({ alg: 'HS512' }).sign(Buffer.from(SECRET_KEY, 'utf-8'));
 
         // const urlResto = `https://menu-kasir.godong.id/auth/${jwt}`;
-        const urlResto = `${process.env.MENU_URL}/auth/${jwt}`;
+        const urlResto = `${process.env.MENU_URL}/auth/ajdshvag72813kl421qo1`;
 
         const qrUrl = await QRCode.toDataURL(urlResto, { width: 200 });
 
