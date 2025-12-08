@@ -30,6 +30,7 @@ import { getSessionServerSide } from '../../../../utilities/servertool';
 import PrintPriceTag from './printPriceTag';
 import AdjustPrintMarginLaporan from '../../../component/adjustPrintMarginLaporan';
 import { BlockUI } from 'primereact/blockui';
+import { InputNumber } from 'primereact/inputnumber';
 export async function getServerSideProps(context) {
     const sessionData = await getSessionServerSide(context, context.resolvedUrl);
     if (sessionData?.redirect) {
@@ -42,11 +43,16 @@ export async function getServerSideProps(context) {
 export default function MasterProduk() {
     const apiEndPointGet = '/api/produk/get';
     const apiEndPointDelete = '/api/produk/delete';
+    const apiEndPointUpdateAllDiscount = '/api/produk/update-discount-all';
     const apiEndPointGetDataEdit = '/api/produk/getdata_edit';
     const apiEndPointUpdStatusHapus = '/api/produk/status-hapus';
 
     const toast = useRef(null);
     const [produk, setProduk] = useState([]);
+    const [produkDiscount, setProdukDiscount] = useState({
+        discount: 0,
+        show: false
+    });
     const [produkTabel, setProdukTabel] = useState([]);
     const [loadingPreview, setLoadingPreview] = useState(false);
     const [produkTabelFilt, setProdukTabelFilt] = useState([]);
@@ -459,6 +465,22 @@ export default function MasterProduk() {
         }
     };
 
+    const updateAllDiscount = async () => {
+        let requestBody = {
+            DISCOUNT: produkDiscount.discount
+        };
+        try {
+            const vaUpdate = await postData(apiEndPointUpdateAllDiscount, requestBody);
+            let data = vaUpdate.data;
+            showSuccess(toast, data?.message)
+            loadLazyData();
+            setProdukDiscount(p => ({ ...p, show: false }))
+        } catch (error) {
+            let e = error?.response?.data || error;
+            showError(toast, e?.message || 'Terjadi Kesalahan');
+        }
+    };
+
     // -----------------------------------------------------------------------------------------------------------------< Print Barcode >
     const [deletePrintBarcodeDialog, setDeletePrintBarcodeDialog] = useState(false);
     const [printBarcode, setPrintBarcode] = useState([]);
@@ -524,6 +546,12 @@ export default function MasterProduk() {
             <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={deleteProduk} />
         </>
     );
+    const diskonDialogFooter = (
+        <>
+            <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={() => setProdukDiscount(p => ({ ...p, show: false }))} />
+            <Button label="Yes" icon="pi pi-check" className="p-button-text" onClick={updateAllDiscount} />
+        </>
+    );
 
     const actionBodyTemplate = (rowData) => {
         return (
@@ -539,8 +567,9 @@ export default function MasterProduk() {
     const headerSearch = (
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
             <h5 className="m-0"></h5>
-            <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <div className="flex flex-column gap-2 md:flex-row md:justify-content-between md:align-items-center">
                 {/* <Dropdown value={defaultOption} onChange={(e) => setDropdownValue(e.value)} options={dropdownValues} optionLabel="name" placeholder="Pilih kolom" /> */}
+                <Button label='Update Diskon Keseluruhan' onClick={() => setProdukDiscount(p => ({ ...p, show: true }))} />
                 <span className="block mt-2 md:mt-0 p-input-icon-left">
                     <i className="pi pi-search" />
                     <InputText placeholder="Search" value={search} onChange={(e) => filterPlugins('search', e.target.value)} className="w-full" />
@@ -653,6 +682,12 @@ export default function MasterProduk() {
                             setPrintBarcode={setPrintBarcode}
                             priceTagTabel={priceTagTabel}
                         />
+
+                        <Dialog visible={produkDiscount.show} header="Update Diskon Keseluruhan" modal footer={diskonDialogFooter} onHide={() => setProdukDiscount(p => ({ ...p, show: false }))}>
+                            <div className="flex align-items-center justify-content-center w-full mt-2">
+                                <InputNumber value={produkDiscount.discount} onChange={(e) => setProdukDiscount(p => ({ ...p, discount: e.value }))} />
+                            </div>
+                        </Dialog>
 
                         {/* Dialog Hapus Produk Tabel*/}
                         <Dialog visible={deleteProdukTabel} header="Confirm" modal footer={produkDialogFooter} onHide={hideDeleteProdukTabel}>
