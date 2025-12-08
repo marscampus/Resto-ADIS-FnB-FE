@@ -47,7 +47,7 @@ export default function MasterLapKasir() {
     const [lapKasirTabelDetail, setLapKasirTabelDetail] = useState([]);
     const [lapKasirDialog, setLapKasirDialog] = useState(false);
     const [search, setSearch] = useState('');
-    const [caraBayar, setCaraBayar] = useState(["Tunai", "E-Money", "Penukaran Point", "Debit Card BMT NU Ngasem", "Debit Card Bank BSI"]);
+    const [caraBayar, setCaraBayar] = useState(["Tunai", "E-Money", "Penukaran Point"]);
     const [pdfUrl, setPdfUrl] = useState('');
     const [jsPdfPreviewOpen, setjsPdfPreviewOpen] = useState(false);
     const [adjustDialog, setAdjustDialog] = useState(false);
@@ -57,8 +57,8 @@ export default function MasterLapKasir() {
     const [rows, setRows] = useState(10); // Jumlah baris per halaman
     const paymentMethods = [
         { label: 'Tunai', value: 'Tunai' },
-        { label: 'Debit Card BMT NU Ngasem', value: 'Debit Card BMT NU Ngasem' },
-        { label: 'Debit Card Bank BSI', value: 'Debit Card Bank BSI' },
+        // { label: 'Debit Card BMT NU Ngasem', value: 'Debit Card BMT NU Ngasem' },
+        // { label: 'Debit Card Bank BSI', value: 'Debit Card Bank BSI' },
         { label: 'E-Money', value: 'E-Money' },
         { label: 'Penukaran Point', value: 'Penukaran Point' }
     ];
