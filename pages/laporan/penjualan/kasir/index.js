@@ -47,7 +47,7 @@ export default function MasterLapKasir() {
     const [lapKasirTabelDetail, setLapKasirTabelDetail] = useState([]);
     const [lapKasirDialog, setLapKasirDialog] = useState(false);
     const [search, setSearch] = useState('');
-    const [caraBayar, setCaraBayar] = useState(["Tunai", "E-Money", "Penukaran Point"]);
+    const [caraBayar, setCaraBayar] = useState(["Tunai", "QRIS", "Potong Gaji"]);
     const [pdfUrl, setPdfUrl] = useState('');
     const [jsPdfPreviewOpen, setjsPdfPreviewOpen] = useState(false);
     const [adjustDialog, setAdjustDialog] = useState(false);
@@ -59,8 +59,8 @@ export default function MasterLapKasir() {
         { label: 'Tunai', value: 'Tunai' },
         // { label: 'Debit Card BMT NU Ngasem', value: 'Debit Card BMT NU Ngasem' },
         // { label: 'Debit Card Bank BSI', value: 'Debit Card Bank BSI' },
-        { label: 'E-Money', value: 'E-Money' },
-        { label: 'Penukaran Point', value: 'Penukaran Point' }
+        { label: 'QRIS', value: 'QRIS' },
+        { label: 'Potong Gaji', value: 'Potong Gaji' }
     ];
     const [lazyState, setlazyState] = useState({
         first: 0,
@@ -431,7 +431,7 @@ export default function MasterLapKasir() {
                 item.TGL,
                 item.FAKTUR,
                 item.GUDANG,
-                item.CARABAYAR === 'Tunai' || item.CARABAYAR === 'Penukaran Point'
+                item.CARABAYAR === 'Tunai' || item.CARABAYAR === 'Potong Gaji' || item.CARABAYAR === 'QRIS'
                     ? item.CARABAYAR
                     : `${item.CARABAYAR} - ${item.TIPEBAYAR ?? ''}`,
                 parseInt(item.TOTAL).toLocaleString(),
@@ -609,7 +609,7 @@ export default function MasterLapKasir() {
                                             </div>
                                             <div className="flex items-center">
                                                 <Checkbox inputId="point" value="Point" checked={caraBayar.includes("Point")} onChange={handleCaraBayarChange} />
-                                                <label htmlFor="point" className="ml-2">Penukaran Point</label>
+                                                <label htmlFor="point" className="ml-2">Potong Gaji</label>
                                             </div>
                                         </div>
                                     </div> */}
@@ -669,6 +669,7 @@ export default function MasterLapKasir() {
                             size="small"
                             loading={loading}
                             emptyMessage="Data Kosong"
+                            lazy
                             onRowsPerPageChange={(e) => setRowsPerPage(e.value)}
                             footerColumnGroup={footerGroup}
                         >
@@ -681,7 +682,7 @@ export default function MasterLapKasir() {
                                 field="CARABAYAR"
                                 header="CARA BAYAR"
                                 body={(rowData) => {
-                                    return (rowData.CARABAYAR === 'Tunai' || rowData.CARABAYAR === 'Penukaran Point')
+                                    return (rowData.CARABAYAR === 'Tunai' || rowData.CARABAYAR === 'Potong Gaji' || rowData.CARABAYAR === 'QRIS')
                                         ? rowData.CARABAYAR
                                         : `${rowData.CARABAYAR} - ${rowData.TIPEBAYAR ?? ''}`;
                                 }}

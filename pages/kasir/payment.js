@@ -25,6 +25,7 @@ import { useReactToPrint } from 'react-to-print';
 import PrintReceipt from './printReceipt';
 import { useSession } from 'next-auth/react';
 import ReceiptKitchen from './receiptKitchen';
+import Anggota from '../component/anggota';
 export const getServerSideProps = async (context) => {
     const sessionData = await getSessionServerSide(context, '/kasir');
     if (sessionData?.redirect) {
@@ -308,9 +309,9 @@ export default function MasterPayment({
         setMemberDialog(true);
     };
 
-    const handleMemberData = async (memberKode, memberNama) => {
+    const handleMemberData = async (member) => {
         let requestBody = {
-            KODE: memberKode
+            KODE: member.kode
         };
 
         try {
@@ -318,8 +319,8 @@ export default function MasterPayment({
             const json = vaTable.data;
             setFirstState((prev) => ({
                 ...prev,
-                member: memberKode,
-                namaMember: memberNama,
+                member: member.kode,
+                namaMember: member.nama,
                 pointAkhir: json.data.TOTALPOINTAKHIR,
                 nominalPointAkhir: json.data.TOTALNOMINALAKHIR,
                 nominalPointConf: json.data.NOMINALPOINT
@@ -897,7 +898,7 @@ export default function MasterPayment({
                         </div>
                     </div>
                 </Dialog>
-                <Member memberDialog={memberDialog} setMemberDialog={setMemberDialog} btnMember={btnMember} handleMemberData={handleMemberData} />
+                <Anggota anggotaDialog={memberDialog} setAnggotaDialog={setMemberDialog} handleAnggotaData={handleMemberData} />
                 <Bank bankDialog={bankDialog} setBankDialog={setBankDialog} btnBank={btnBank} handleBankData={handleBankData} />
                 {/* -----------------------------------------------------------------------------------------< KARTU - BANK > */}
                 <Dialog visible={kembalianDialog} modal className="p-fluid" closable={false}>
