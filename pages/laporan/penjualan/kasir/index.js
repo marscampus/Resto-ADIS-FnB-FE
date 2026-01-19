@@ -659,9 +659,9 @@ export default function MasterLapKasir() {
                             value={lapKasirTabelFilt}
                             filters={lazyState.filters}
                             header={headerSearch}
-                            first={first} // Menggunakan nilai halaman pertama dari state
+                            // first={first} // Menggunakan nilai halaman pertama dari state
                             rows={rows} // Menggunakan nilai jumlah baris per halaman dari state
-                            onPage={onPage} // Memanggil fungsi onPage saat halaman berubah
+                            // onPage={onPage} // Memanggil fungsi onPage saat halaman berubah
                             paginator
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                             currentPageReportTemplate="Menampilkan {first} - {last} dari {totalRecords} data"
@@ -669,8 +669,7 @@ export default function MasterLapKasir() {
                             size="small"
                             loading={loading}
                             emptyMessage="Data Kosong"
-                            lazy
-                            onRowsPerPageChange={(e) => setRowsPerPage(e.value)}
+                            // onRowsPerPageChange={(e) => setRowsPerPage(e.value)}
                             footerColumnGroup={footerGroup}
                         >
                             <Column headerStyle={{ textAlign: 'center' }} field="NO" header="NO."></Column>
